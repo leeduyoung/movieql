@@ -1,0 +1,35 @@
+type Nicolas
+{
+    name: String!
+    age: Int!
+    gender: String!
+}
+
+type Person
+{
+    id: Int!
+    name: String!
+    age: Int!
+    gender: String!
+}
+
+type Movie
+{
+    id: Int!
+    name: String!
+    score: Int!
+}
+
+type Query {
+    name: String!
+    people: [Person]!
+    person(id: Int!): Person
+    movies: [Movie]!
+    movie(id: Int!): Movie
+}
+
+# Mutation = DB 상태가 변할 때 사용하는 것.
+type Mutation
+{
+    addMovie(name: String!, score: Int!): Movie!
+}
