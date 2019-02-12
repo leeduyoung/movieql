@@ -20,16 +20,33 @@ type Movie
     score: Int!
 }
 
+type ApiMovie
+{
+    id: Int!
+    title: String!
+    rating: Float
+    description_intro: String
+    language: String
+    medium_cover_image: String
+    genres: [String]
+}
+
 type Query {
     name: String!
     people: [Person]!
     person(id: Int!): Person
+
     movies: [Movie]!
     movie(id: Int!): Movie
+
+    getApiMovies(limit: Int, rating: Float): [ApiMovie]!
+    getApiMovie(id: Int!): ApiMovie!
+    getSuggestions(id: Int!): [ApiMovie]!     
 }
 
 # Mutation = DB 상태가 변할 때 사용하는 것.
 type Mutation
 {
     addMovie(name: String!, score: Int!): Movie!
+    deleteMovie(id: Int!): Boolean!
 }

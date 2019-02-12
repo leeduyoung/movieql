@@ -1,4 +1,4 @@
-import {people, getById, getMovieById, getMovies} from '../db/db';
+import * as db from '../db/db';
 
 const nicolas = 
 {
@@ -13,15 +13,19 @@ const resolvers =
     Query: {
         name: () => "mango",
         // person: (_, args) => getById(args.id),
-        person: (_, { id }) => getById(id),
-        people: () => people,
-        movies: getMovies,
-        movie: (_, { id }) => getMovieById(id),
+        person: (_, { id }) => db.getById(id),
+        people: () => db.people,
+        
+        movies: db.getMovies,
+        movie: (_, { id }) => db.getMovieById(id),
+
+        getApiMovies: (_, {limit, rating}) => db.getApiMovies(limit, rating),
+        getApiMovie: (_, { id }) => db.getApiMovie(id),
+        getSuggestions: (_, { id }) => db.getSuggestions(id)
     },
     Mutation: {
-        addMovie: (_, {name, score}) => {
-            
-        }
+        addMovie: (_, {name, score}) => db.addMovie(name, score),
+        deleteMovie: (_, {id}) => db.deleteMovie(id)
     }
 }
 

@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 export const people =
 [
     {
@@ -84,4 +86,64 @@ export const deleteMovie = id =>
     }
     else
         return false;
+}
+
+export const addMovie = (name, score) =>
+{
+    const newMovie =
+    {
+        id: movies.length + 1,
+        name,
+        score
+    };
+    movies.push(newMovie);
+    return newMovie;
+}
+
+// GraphQL과 외부 api를 통합하고 싶을때 예시
+const BASE_URL = "https://yts.am/api/v2/";
+const LIST_MOVIES_URL = `${BASE_URL}list_movies.json`;
+const MOVIE_DETAILS_URL = `${BASE_URL}movie_details.json`;
+const MOVIE_SUGGESTIONS_URL = `${BASE_URL}movie_suggestions.json`;
+export const getApiMovies = (limit, rating) =>
+{
+    let requestURL = LIST_MOVIES_URL;
+    if (limit && limit > 0)
+        requestURL += `?limit=${limit}`;
+    
+    if (rating && rating > 0)
+        requestURL += `&minimum_rating=${rating}`;
+
+    return fetch(`${requestURL}`)
+        .then(res => res.json())
+        .then(json => json.data.movies);
+}
+
+export const getApiMovie = (id) =>
+{
+    let requestURL = MOVIE_DETAILS_URL;
+    if (id)
+        requestURL += `?movie_id=${id}`;
+
+    return fetch(`$${requestURL}`)
+        .then(res => res.json())
+        .then(json => json.data.movie);
+}
+// export const getApiMovie = async (id) =>
+// {
+//     let requestURL = MOVIE_DETAILS_URL;
+//     console.log(id);
+//     if (id)
+//         requestURL += `?movie_id=${id}`;
+
+//     return await fetch(`${'https://yts.am/api/v2/movie_details.json?movie_id=10832'}`);
+// }
+
+export const getSuggestions = async (id) =>
+{
+    let requestURL = MOVIE_SUGGESTIONS_URL;
+    if (id)
+        requestURL += `?movie_id=${id}`;
+
+    return await fetch(`${requestURL}`);
 }
