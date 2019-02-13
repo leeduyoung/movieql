@@ -125,7 +125,7 @@ export const getApiMovie = (id) =>
     if (id)
         requestURL += `?movie_id=${id}`;
 
-    return fetch(`$${requestURL}`)
+    return fetch(`${requestURL}`)
         .then(res => res.json())
         .then(json => json.data.movie);
 }
@@ -139,11 +139,13 @@ export const getApiMovie = (id) =>
 //     return await fetch(`${'https://yts.am/api/v2/movie_details.json?movie_id=10832'}`);
 // }
 
-export const getSuggestions = async (id) =>
+export const getSuggestions = (id) =>
 {
     let requestURL = MOVIE_SUGGESTIONS_URL;
     if (id)
         requestURL += `?movie_id=${id}`;
 
-    return await fetch(`${requestURL}`);
+    return fetch(`${requestURL}`)
+        .then(res => res.json())
+        .then(json => json.data.movies);
 }

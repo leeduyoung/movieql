@@ -40,7 +40,7 @@ type Query {
     movie(id: Int!): Movie
 
     getApiMovies(limit: Int, rating: Float): [ApiMovie]!
-    getApiMovie(id: Int!): ApiMovie!
+    getApiMovie(id: Int!): ApiMovie
     getSuggestions(id: Int!): [ApiMovie]!     
 }
 
